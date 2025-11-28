@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link De Pobre - Suas Melhores Ofertas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5e6f0 0%, #ffd9e8 50%, #ffe5d9 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animação de fundo */
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .logo-container {
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .logo {
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+        }
+
+        h1 {
+            font-size: 3em;
+            background: linear-gradient(135deg, #c2185b, #e91e63, #ff6f00, #ff9800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .tagline {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        /* Navegação */
+        nav {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #c2185b, #e91e63);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            margin: 10px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(194, 24, 91, 0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(194, 24, 91, 0.5);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #ff6f00, #ff9800);
+        }
+
+        /* Seções */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        /* Grid de Botões */
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .store-button {
+            background: white;
+            border: none;
+            padding: 30px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            display: block;
+        }
+
+        .store-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #c2185b, #e91e63, #ff6f00, #ff9800);
+            transition: left 0.5s ease;
+            z-index: 0;
+        }
+
+        .store-button:hover::before {
+            left: 0;
+        }
+
+        .store-button:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(194, 24, 91, 0.3);
+        }
+
+        .store-button-content {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .store-button:hover .store-button-content {
+            color: white;
+        }
+
+        .store-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .store-button.disabled:hover {
+            transform: none;
+        }
+
+        .store-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .store-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #c2185b, #ff6f00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .store-button:hover .store-name {
+            -webkit-text-fill-color: white;
+        }
+
+        .coming-soon {
+            font-size: 0.9em;
+            color: #999;
+            font-style: italic;
+        }
+
+        /* História */
+        .history-section {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .history-section h2 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #c2185b, #ff6f00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .history-section p {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Partículas decorativas */
+        .particle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #c2185b, #ff9800);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 6s infinite ease-in-out;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-100px) translateX(50px); }
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .logo {
+                max-width: 200px;
+            }
+
+            .buttons-grid {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+
+            .history-section {
+                padding: 30px 20px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Partículas decorativas -->
+    <div class="particle" style="top: 10%; left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="top: 20%; left: 80%; animation-delay: 1s;"></div>
+    <div class="particle" style="top: 60%; left: 15%; animation-delay: 2s;"></div>
+    <div class="particle" style="top: 80%; left: 70%; animation-delay: 3s;"></div>
+    <div class="particle" style="top: 40%; left: 90%; animation-delay: 4s;"></div>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="imagens/link_de_pobre1.png" alt="Link De Pobre Logo" class="logo">
+            </div>
+            <p class="tagline">✨ As melhores ofertas em um só lugar ✨</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" onclick="showSection('lojas')">🛍️ Nossas Lojas</button>
+            <button class="nav-btn" onclick="showSection('historia')">📖 Nossa História</button>
+        </nav>
+
+        <!-- Seção de Lojas -->
+        <section id="lojas" class="section active">
+            <div class="buttons-grid">
+                <a href="https://collshp.com/linkdepobre816?share_channel_code=1&view=storefront" target="_blank" class="store-button">
+                    <div class="store-button-content">
+                        <div class="store-icon">🛒</div>
+                        <div class="store-name">Loja Shopee</div>
+                        <p>Confira nossas ofertas!</p>
+                    </div>
+                </a>
+
+                <a href="https://www.mercadolivre.com.br/social/meth7614682/lists/bd456002-9336-43f4-b02c-930314f200a0?matt_tool=70057192&forceInApp=true" target="_blank" class="store-button">
+                    <div class="store-button-content">
+                        <div class="store-icon">🏪</div>
+                        <div class="store-name">Loja Mercado Livre</div>
+                        <p>Produtos selecionados</p>
+                    </div>
+                </a>
+
+                <div class="store-button disabled">
+                    <div class="store-button-content">
+                        <div class="store-icon">📦</div>
+                        <div class="store-name">Loja Amazon</div>
+                        <p class="coming-soon">Em breve...</p>
+                    </div>
+                </div>
+
+                <div class="store-button disabled">
+                    <div class="store-button-content">
+                        <div class="store-icon">💻</div>
+                        <div class="store-name">Loja Kabum</div>
+                        <p class="coming-soon">Em breve...</p>
+                    </div>
+                </div>
+
+                <a href="https://chat.whatsapp.com/BUgNvl05DzhAeKRlJKapuH" target="_blank" class="store-button">
+                    <div class="store-button-content">
+                        <div class="store-icon">💬</div>
+                        <div class="store-name">Grupo WhatsApp</div>
+                        <p>Junte-se à comunidade!</p>
+                    </div>
+                </a>
+
+                <div class="store-button disabled">
+                    <div class="store-button-content">
+                        <div class="store-icon">✈️</div>
+                        <div class="store-name">Grupo Telegram</div>
+                        <p class="coming-soon">Em breve...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seção Nossa História -->
+        <section id="historia" class="section">
+            <div class="history-section">
+                <h2>Nossa História</h2>
+                <p>
+                    O <strong>Link De Pobre</strong> nasceu de uma ideia simples: democratizar o acesso às melhores ofertas e produtos com preços acessíveis para todos. Em um mundo onde as compras online se tornaram essenciais, percebemos que muitas pessoas tinham dificuldade em encontrar produtos de qualidade com preços justos.
+                </p>
+                <p>
+                    Nossa missão é reunir em um único lugar as melhores oportunidades de compra das principais plataformas de e-commerce do Brasil. Trabalhamos incansavelmente para garimpar, selecionar e compartilhar produtos que realmente valem a pena, sempre pensando no bolso do consumidor brasileiro.
+                </p>
+                <p>
+                    Mais do que uma simples agregadora de links, somos uma comunidade que acredita que todos merecem ter acesso a produtos de qualidade sem comprometer o orçamento. Nosso nome pode ser descontraído, mas nosso compromisso com você é sério: encontrar as melhores ofertas e facilitar sua vida na hora de comprar online.
+                </p>
+                <p>
+                    Junte-se a milhares de pessoas que já economizam com o Link De Pobre. Seja através das nossas lojas parceiras ou dos nossos grupos de ofertas, estamos aqui para garantir que você sempre faça a melhor escolha!
+                </p>
+                <p style="text-align: center; margin-top: 30px; font-weight: bold; color: #c2185b;">
+                    💜 Economize com estilo, compre com inteligência! 💜
+                </p>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2024 Link De Pobre - Todos os direitos reservados</p>
+            <p>Feito com 💜 para você economizar</p>
+        </footer>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Esconder todas as seções
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remover active de todos os botões
+            const navBtns = document.querySelectorAll('.nav-btn');
+            navBtns.forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Mostrar seção selecionada
+            document.getElementById(sectionId).classList.add('active');
+
+            // Adicionar active ao botão clicado
+            event.target.classList.add('active');
+        }
+
+        // Prevenir clique em botões desabilitados
+        document.querySelectorAll('.store-button.disabled').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>
